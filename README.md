@@ -16,11 +16,6 @@ There are four clean datasets called:
 
 ## Machine Learning scripts
 
-
-TODO ESTO ES LO QUE TENIAMOS EN CRACOLES, ADAPTAR A LENTEJAS
-
-====> DESDE AQUI =====>
-
 All machine learning scripts are written in Python and located at `Lentils/Pyscripts` folder.
 
 #### Future/future_lens_resistance_all_models-Ridge.ipynb
@@ -84,14 +79,6 @@ Located at `future_lens_resistance_corr.ipynb`. This scripts produces two differ
 correlations among the predictors. The second matrix shows correlations between the target variable and the predictors.
 
 Invoke once: `future_lens_resistance_corr.ipynb`
-
-
-====> HASTA AQUÍ ====>
-
-
-====> LO QUE SIGUE ES LA PARTE R Y YA ESTÁ ACTUALIZADA =====>
-
-
 
 ## Post-prediction scripts
 
