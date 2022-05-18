@@ -6,10 +6,12 @@ Please, clone the repo and follow these steps.
 
 ## Data
 
-ICIAR: DESCRIBIR AQUÍ LOS FICHEROS, ESTO ESTÁ COPIADO DE CARACOLES
+There are four clean datasets called:
+* 'DatosPresente/fichtraining_ROYA_CAMPO_nondup.csv' Dataset with the bioclimatic variables, DSR and coordinates for the lentils evaluated for their resistance to rust in the present.
+* 'DatosPrecip/ROYA_Completa_fut_pres.txt' Dataset with the coordinates for the lentils evaluated for their resistance to rust in the future.
+* 'DatosPresente/SupplementaryTable3_RubioTeso_etal_Martonne_bio12.xlsx' Dataset with the bioclimatic variables, DSR and coordinates for the crop lentils in the present.
+* 'DatosPrecip/Len_silvestres_futuro_B1_B12.txt' Dataset with the coordinates for the crop lentils in the future.
 
-There are five clean datasets called `abund_merged_dataset_onlycompetitors` and `abund_merged_dataset_onlyenvironment`. 
-The first one records the abundance of competitor species whereas the second holds soil properties and annual precipitation.
 
 
 ## Machine Learning scripts
@@ -19,77 +21,69 @@ TODO ESTO ES LO QUE TENIAMOS EN CRACOLES, ADAPTAR A LENTEJAS
 
 ====> DESDE AQUI =====>
 
-All machine learning scripts are written in Python and located at `Pyscripts` folder, you will need the release 3.8 or latter.
+All machine learning scripts are written in Python and located at `Lentils/Pyscripts` folder.
 
-#### ALL_FEATURES_predict_by_year.py
+#### Future/future_lens_resistance_all_models-Ridge.ipynb
 
-This script builds three predictors (Linear regression, Random Forest and XGBoost) splitting data and trainig sets by YEAR.
+This script builds 500 Ridge Regression predictors.
 
-Prediction errors (MSE, RMSE, RSE)  by model and year are stored at `results/ALLFEATURES_BY_YEAR.xlsx`
+DSR predictions by model are stored at:
+* `results/Roya_Presente_all_iter_Ridge.xlsx` 
+* `results/Roya_Future_all_iter_Ridge.xlsx`
+* `results/Silvestres_Presente_alliter_Ridge.xlsx`
+* `results/Silvestres_Future_alliter_Ridge.xlsx`
 
-Invocation: `python ALL_FEATURES_predict_by_year.py`
+Median DSR predictions are also calculated and stored at:
+* `results/Roya_Presente_avg_Ridge.xlsx` 
+* `results/Roya_Future_avg_Ridge.xlsx`
+* `results/Silvestres_Presente_avg_Ridge.xlsx`
+* `results/Silvestres_Future_avg_Ridge.xlsx`
 
-If the invocation is `python ALL_FEATURES_predict_by_year n` instead,  then precipitation feature is excluded and results are stored at `results/ALLFEATURES_BY_YEAR_NOPRECIP.xlsx`
+Invocation: `future_lens_resistance_all_models-Ridge.ipynb`
 
-#### ABIOTIC_predictor.py
+#### Future/future_lens_resistance_all_models-RF.ipynb
 
-This script builds as many predictors as the number of experiments set by the contents of `experiments.txt`
+This script builds 500 Random Forest predictors.
 
-Only abiotic features are included to train the models: linear regression, Random Forest and XGBoost. For each experiment, there is a random training/testing split.
+DSR predictions by model are stored at:
+* `results/Roya_Presente_all_iter_RF.xlsx` 
+* `results/Roya_Future_all_iter_RF.xlsx`
+* `results/Silvestres_Presente_alliter_RF.xlsx`
+* `results/Silvestres_Future_alliter_RF.xlsx`
 
-Prediction errors (MSE, RMSE, RSE) by model and experiment are stored as individual sheets at 
-`results/ABIOTIC_N.xlsx` where `N` stands for the number of experiments. 
+Median DSR predictions are also calculated and stored at:
+* `results/Roya_Presente_avg_RF.xlsx` 
+* `results/Roya_Future_avg_RF.xlsx`
+* `results/Silvestres_Presente_avg_RF.xlsx`
+* `results/Silvestres_Future_avg_RF.xlsx`
 
-Invocation: `python ABIOTIC_predictor.py`
+Invocation: `future_lens_resistance_all_models-RF.ipynb`
 
-If the invocation is `python ABIOTIC_predictor.py n` instead, then precipitation feature is excluded and the results
-file is called `results/ABIOTIC_NOPRECIP_N.xlsx`
+#### Future/future_lens_resistance_all_models-XGBOOST.ipynb
 
-#### ALL_FEATURES_predictor.py
+This script builds 500 XGBOOST Regression predictors.
 
-This script builds as many predictors as the number of experiments set by the contents of `experiments.txt`
-All features are included to train the models: linear regression, Random Forest and XGBoost
-For each experiment, there is a random training/testing split.
+DSR predictions by model are stored at:
+* `results/Roya_Presente_all_iter_XGBOOST.xlsx` 
+* `results/Roya_Future_all_iter_XGBOOST.xlsx`
+* `results/Silvestres_Presente_alliter_XGBOOST.xlsx`
+* `results/Silvestres_Future_alliter_XGBOOST.xlsx`
 
-Prediction errors (MSE, RMSE, RSE) by model and experiment are stored as individual sheets at 
-`results/ALLFEATURES_N.xlsx` where `N` stands for the number of experiments. 
+Median DSR predictions are also calculated and stored at:
+* `results/Roya_Presente_avg_XGBOOST.xlsx` 
+* `results/Roya_Future_avg_XGBOOST.xlsx`
+* `results/Silvestres_Presente_avg_XGBOOST.xlsx`
+* `results/Silvestres_Future_avg_XGBOOST.xlsx`
 
-Invocation: `python ALLFEATURES_predictor.py`
-
-If the invocation is python `ALLFEATURES_predictor.py n`, then precipitation feature is excluded and the results
-file is called `ALLFEATURES_NOPRECIP_N.xlsx`
-
-#### TWO_STEP_predictor.py
-
-This script builds as many predictors as the number of experiments set by the contents of `experiments.txt`
-First, competitor species are predicted using abiotic features, using Random Forest. Then,
-abiotic features and predicted competitors are joined to train the models: linear regression, Random Forest and XGBoost
-
-Prediction errors (MSE, RMSE, RSE) by model and experiment are stored as individual sheets at 
-`results/TWOSTEP_N.xlsx` where `N` stands for the number of experiments. 
-
-Invocation: `python TWOSTEP_predictor.py`
-
-CAUTION: This script is CPU-intensive. Running 100 experiments take hours.
-
-#### TWO_STEP_predict_by_species.py
-
-This script builds as many predictors as the number of experiments set by the contents of `experiments.txt`
-First, competitor species are predicted using abiotic features, using Random Forest. Then,
-abiotic features and predicted competitors are joined to train the models: linear regression, Random Forest and XGBoost
-
-Prediction abundances by experiment are stored at `results/TWOSTEP_byspecies_N.xlsx` where `N` stands for the number of experiments. 
-
-Invocation: `python TWO_STEP_predict_by_species.py`
-
-CAUTION: This script is CPU-intensive. Running 100 experiments take hours.
+Invocation: `future_lens_resistance_all_models-XGBOOST.ipynb`
 
 
-## Feature importance scripts
+## Feature correlation script
 
-Located at `Pyscripts/Feature_importance` folder. These scripts produce correlation matrices, importance tables and plots for the ABIOTIC and the ALL_FEATURES models. Results are stored in the same folder.
+Located at `future_lens_resistance_corr.ipynb`. This scripts produces two different correlation matrices. First matrix returns
+correlations among the predictors. The second matrix shows correlations between the target variable and the predictors.
 
-Invoke once: `python ABIOTIC_features_importance.py` and `ALL_FEATURES_features_importance.py
+Invoke once: `future_lens_resistance_corr.ipynb`
 
 
 ====> HASTA AQUÍ ====>
