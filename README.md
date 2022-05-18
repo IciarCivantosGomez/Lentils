@@ -7,10 +7,10 @@ Please, clone the repo and follow these steps.
 ## Data
 
 There are four clean datasets called:
-* 'DatosPresente/fichtraining_ROYA_CAMPO_nondup.csv' Dataset with the bioclimatic variables, DSR and coordinates for the lentils evaluated for their resistance to rust in the present.
-* 'DatosPrecip/ROYA_Completa_fut_pres.txt' Dataset with the coordinates for the lentils evaluated for their resistance to rust in the future.
-* 'DatosPresente/SupplementaryTable3_RubioTeso_etal_Martonne_bio12.xlsx' Dataset with the bioclimatic variables, DSR and coordinates for the crop lentils in the present.
-* 'DatosPrecip/Len_silvestres_futuro_B1_B12.txt' Dataset with the coordinates for the crop lentils in the future.
+* `DatosPresente/fichtraining_ROYA_CAMPO_nondup.csv` Dataset with the bioclimatic variables, DSR and coordinates for the lentils evaluated for their resistance to rust in the present.
+* `DatosPrecip/ROYA_Completa_fut_pres.txt` Dataset with the coordinates for the lentils evaluated for their resistance to rust in the future.
+* `DatosPresente/SupplementaryTable3_RubioTeso_etal_Martonne_bio12.xlsx` Dataset with the bioclimatic variables, DSR and coordinates for the crop lentils in the present.
+* `DatosPrecip/Len_silvestres_futuro_B1_B12.txt` Dataset with the coordinates for the crop lentils in the future.
 
 
 
