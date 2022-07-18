@@ -1,10 +1,13 @@
 # This script computes the RMSE distributions for each location of the testing set
-# where DSr was measured in laboratory
+# where DSr was measured in present time. It plots the RMSE distributions too and computes
+# the Kolmogorov-Smirnov distances
 #
-# Input files: results/Roya_Presente_AVG_ALL_iter_*** where *** stands for "Ridge", "RF" or "XGBoost"
-# Output file: tables/model_Errors_AVG.csv
-#              tables/Roya_Presente_merged_ALL.csv
-#              tables/model_KSdist.csv
+# Input files: ../Pyscripts/results/Roya_Presente_AVG_ALL_iter_*** where *** stands for "Ridge", "RF" or "XGBoost"
+# Output file: ../tables/model_Errors_AVG.csv
+#              ../tables/Roya_Presente_merged_ALL.csv
+#              ../tables/model_KSdist.csv
+# Plots      : ../plots/predictions_errors
+
 library(readxl)
 library(ggplot2)
 library(seewave)
@@ -45,7 +48,7 @@ metodos <- c("RF","Ridge","XGB")
 medianas <- data.frame("model"=rep("",length(metodos)),
                        "mediana"=rep(0,length(metodos)),
                        "media"=rep(0,length(metodos)))
-dirresults <- "../Futuro/results"
+dirresults <- "../Pyscripts/results"
 j <- 1
 for (metod in metodos)
 {
@@ -153,10 +156,6 @@ tdir <- "../tables"
 if (!dir.exists(tdir))
   dir.create(tdir)
 
-ppi <- 600
-png(paste0(odir,"/RMSE_Roya.png"), width=7*ppi, height=5*ppi, res=ppi)
-print(RMSEplot)
-dev.off()
 write.csv2(Roya_Presente_AVG_ALL,paste0(tdir,"/Model_Errors_AVG.csv"),row.names = FALSE)
 write.csv2(Roya_Presente_merged_ALL,paste0(tdir,"/Roya_Presente_merged_ALL.csv"),row.names = FALSE)
 write.csv2(model_KSdist,paste0(tdir,"/Model_KSdist.csv"),row.names = FALSE)
@@ -175,7 +174,7 @@ for (modelselect in models){
 wsup <- (RMSEplot | RMSEcumsum) + plot_layout(widths = c(0.4,0.6 ))
 winf <- (p[[1]]+ylab("Density\n") | p[[2]] | p[[3]])
 w <- wsup / winf  + plot_layout(heights = c(0.45,0.55)) + plot_annotation(tag_levels = 'A') &
-  theme(plot.tag = element_text(size = 11,face="bold",family=" Times New Roman",hjust = 0, vjust = -0.5))
+  theme(plot.tag = element_text(size = 15,face="bold",family=" Times New Roman",hjust = 0, vjust = -0.5))
 
 nfile <- paste0(odir,"/predictions_errors")
 png(paste0(nfile,".png"),width=10*ppi,height=6*ppi,res=ppi)
