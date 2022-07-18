@@ -1,6 +1,6 @@
 # README #
 
-This repository contains the software, data and reproducibility instructions of a set of machine learning models to predict rust sensitivity (DSr).
+This repository contains the software, data and reproducibility instructions of a set of machine learning models to predict rust sensitivity (DSr) of Crop Wild Relatives (CWR) of Lens culinaris.
 
 Please, clone the repo and follow these steps.
 
@@ -82,9 +82,14 @@ Invoke once: `future_lens_resistance_corr.ipynb`
 
 ## Post-prediction scripts
 
-## Exploratory analysis
+After you run the py scripts, there is a set of R scripts for data visualization
+You will need R 4.0.1 or later. Go to the R_Code folder and run scripts in the following order:
 
-You will need R 4.0.1 or later. Go to the R_Code folder and run `merge_results.R` and the `paint_maps.R`
+- `merge_results.R`  This script computes the RMSE distributions for each location of the testing set where DSr was measured in present time
+
+
+
+and the `paint_maps.R`
 
 - Results 
 
