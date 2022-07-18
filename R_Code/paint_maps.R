@@ -4,9 +4,12 @@
 #              Silvestres_Presente_alliter_*
 #              SupplementaryMaterial10_RubioTeso_etal.xlsx
 #              silvest_data_future_,modelprec,.xlsx
-# Output file: tables/data_map_,modelprec,_,CChange_model,.csv
-#              tables/HighValueSamples_,modelprec,_,CChange_model,.csv
-#              tables/model_KSdist.csv
+# Output file: ../tables/data_map_,modelprec,_,CChange_model,.csv
+#              ../tables/HighValueSamples_,modelprec,_,CChange_model,.csv
+#              ../tables/model_KSdist.csv
+#              ../tables/SpeciesCountHV[FUTURE,NOW,PROTECTED]_modelprec_CChange_model
+# Plots      : ../plots/   ALL MAPS
+#            : ../plots/hist_preds_CChange_model_modelprec
 
 library(ggplot2)
 library(patchwork)
@@ -219,15 +222,15 @@ plotBIOvarhistogram <- function(datos,modelo,CChange_model,nbins=25){
 }
 
 # CONFIGURATION CODE
-print_indiv_maps <- FALSE     # print individual maps
-printepsfile <- TRUE          # print in EPS format
+print_indiv_maps <- FALSE     # print individual country maps. Time consuming
+printepsfile <- TRUE          # print in EPS format output files. By default just .png
 rppi <- 600                   # plots resolution
 encircle_all_interest_samples <- TRUE
-CChange_model <- "BCC_370"
-modelprec <- "RF"
+CChange_model <- "BCC_370"    # Use BCC_370 results. You can change it by any other IPCC scenario
+modelprec <- "RF"             # Use Random Forest as predictor model
 odir <- "../plots"
-results_dir <- "../Futuro/results/"
-data_dir <- "../Futuro/datasets/DatosPresente/"
+results_dir <- "../Pyscripts/results/"
+data_dir <- "../Pyscripts/datasets/DatosPresente/"
 
 if (!dir.exists(odir))
   dir.create(odir)
@@ -298,17 +301,17 @@ for (magnitudplot in vmags)
   data_to_plot$COLLSITE <- ""
   data_to_plot$SPECIES <- ""
   for (k in 1:nrow(data_to_plot)){
-    data_to_plot$SPECIES[k] <- muestra$SPECIES
-    data_to_plot$ACCENUMB[k] <- muestra$ACCENUMB
-    data_to_plot$COLLSITE[k] <- muestra$COLLSITE
     
     if ((is.element(data_to_plot$Latitude_decimal[k],ProtAreas$DECLATITUD)) &
         (is.element(data_to_plot$Longitude_decimal[k],ProtAreas$DECLONGITU))){
-      data_to_plot$Protected[k] <- "Yes" 
-      muestra <- ProtAreas[data_to_plot$Latitude_decimal[k] == ProtAreas$DECLATITUD &
-                             data_to_plot$Longitude_decimal[k]== ProtAreas$DECLONGITU,]
-
-    }
+        data_to_plot$Protected[k] <- "Yes" 
+        muestra <- ProtAreas[data_to_plot$Latitude_decimal[k] == ProtAreas$DECLATITUD &
+                           data_to_plot$Longitude_decimal[k]== ProtAreas$DECLONGITU,]
+        data_to_plot$SPECIES[k] <- muestra$SPECIES
+        data_to_plot$ACCENUMB[k] <- muestra$ACCENUMB
+        data_to_plot$COLLSITE[k] <- muestra$COLLSITE
+       }
+  
   }
   data_to_plot$Protected <- as.factor(data_to_plot$Protected)
   
@@ -434,8 +437,7 @@ specvalnow <- as.data.frame(table(high_value_samples$SPECIES))
 specvalfuture <- as.data.frame(table(high_value_samples[high_value_samples$VeryHighValue,]$SPECIES))
 
 names(specall) <- c("Species", "Count")
-write.csv2(specall,paste0(tdir,"/SpeciesCountALL_",modelprec,"_",CChange_model,".csv"),row.names=FALSE)
-names(specall) <- names(specall)
+names(specprot) <- names(specall)
 write.csv2(specprot,paste0(tdir,"/SpeciesCountPROTECTED_",modelprec,"_",CChange_model,".csv"),row.names=FALSE)
 names(specvalnow) <- names(specall)
 write.csv2(specvalnow,paste0(tdir,"/SpeciesCountHVNOW_",modelprec,"_",CChange_model,".csv"),row.names=FALSE)
