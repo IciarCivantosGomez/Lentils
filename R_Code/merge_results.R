@@ -44,6 +44,7 @@ plotpredhistogram <- function(datos,modelo,texto,KSdist,nbins=25){
   return(p)
 }
 
+ppi <- 300
 metodos <- c("RF","Ridge","XGB")
 medianas <- data.frame("model"=rep("",length(metodos)),
                        "mediana"=rep(0,length(metodos)),
